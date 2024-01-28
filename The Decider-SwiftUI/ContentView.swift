@@ -13,44 +13,37 @@ struct ContentView: View {
     @Query private var items: [Item]
 
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
-                    }
-                }
-                .onDelete(perform: deleteItems)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-        } detail: {
-            Text("Select an item")
-        }
-    }
+        
 
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
+        VStack{
+            Spacer()
+            Text("Gary")
+                .font(Font.largeTitle.weight(.bold))
+                .padding(50)
+                .foregroundColor(.blue)
+                .frame(width: 200)
+                .background(.yellow)
+                .cornerRadius(20.0, antialiased: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+            
+            Spacer()
+            Button("Go to next Decider") {
+                print("Button tapped!")
             }
+            .offset(CGSize(width: 0.0, height: -30))
+            .font(Font.title)
+            .buttonStyle(.borderedProminent)
+            .foregroundColor(.white)
+
+            Spacer()
+            Text("Text")
+                .font(Font.largeTitle.weight(.semibold))
+                .padding(50)
+                .foregroundColor(.blue)
+                .frame(width: 200)
+                .background(.yellow)
+                .cornerRadius(20.0, antialiased: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+            Spacer()
+
         }
     }
 }
