@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import GameKit
 
 struct GrowingButton: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
@@ -26,12 +27,10 @@ struct ContentView: View {
     
     @Query var items: [DataItemx]
 
-    @State var deciderText = "" //DeciderNames.currentDecider.deciderName.rawValue
+    @State var deciderText = ""
     
-/*    init() {
-            self.initiateDeciderText()
-        }
-*/
+    @State var restaurantText = ""
+
     var body: some View {
         
         VStack{
@@ -44,7 +43,7 @@ struct ContentView: View {
                 .background(.yellow)
                 .cornerRadius(20.0, antialiased: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
                 .onAppear {
-                    print("onAppear")
+                    print("onAppear deciderText")
                     self.initiateDeciderText()
                 }
             Spacer()
@@ -56,13 +55,20 @@ struct ContentView: View {
             .font(Font.title)
             .buttonStyle(GrowingButton())
             Spacer()
-            Text("Text")
-                .font(Font.largeTitle.weight(.semibold))
-                .padding(50)
+            Text("\(restaurantText)")
+                .padding(40)
+                .font(.system(size: 500))
+                .minimumScaleFactor(0.01)
                 .foregroundColor(.blue)
-                .frame(width: 200)
+                .frame(width: 200, alignment: .center)
                 .background(.yellow)
                 .cornerRadius(20.0, antialiased: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+         
+                .onAppear {
+                    print("onAppear restaurantText")
+                    restaurantText = selectARestaurant()
+                    //self.initiateDeciderText()
+                }
             Spacer()
  
         }
@@ -166,6 +172,39 @@ struct ContentView: View {
         }
     }
 
+    func selectARestaurant() -> String {
+
+        var dieRoll = 0
+        if RestaurantNames.Restaurants.allCases.count >= 1 {
+            
+            let dieRolls = GKRandomDistribution(lowestValue: 0, highestValue: (RestaurantNames.Restaurants.allCases.count - 1))
+            dieRoll = dieRolls.nextInt()
+            switch dieRoll {
+            case 0: RestaurantNames.todaysRestaurant = RestaurantNames.Restaurants.DeAfghanan_Cuisine.rawValue
+            case 1:
+                RestaurantNames.todaysRestaurant = RestaurantNames.Restaurants.El_Patio.rawValue
+            case 2:
+                RestaurantNames.todaysRestaurant = RestaurantNames.Restaurants.Jacks.rawValue
+            case 3:
+                RestaurantNames.todaysRestaurant = RestaurantNames.Restaurants.Lazy_Dog.rawValue
+            case 4:
+                RestaurantNames.todaysRestaurant = RestaurantNames.Restaurants.Massimos.rawValue
+            case 5:
+                RestaurantNames.todaysRestaurant = RestaurantNames.Restaurants.Papillon.rawValue
+            case 6:
+                RestaurantNames.todaysRestaurant = RestaurantNames.Restaurants.The_Counter.rawValue
+            case 7:
+                RestaurantNames.todaysRestaurant = RestaurantNames.Restaurants.Banana_Leaf.rawValue
+            case 8:
+                RestaurantNames.todaysRestaurant = RestaurantNames.Restaurants.El_Rodeo.rawValue
+            case 9:
+                RestaurantNames.todaysRestaurant = RestaurantNames.Restaurants.Sakoons.rawValue
+            default:
+                print("ERROR in chooseRestaurant()")
+            }
+        }
+        return RestaurantNames.todaysRestaurant
+    }
 }
 
 #Preview {
