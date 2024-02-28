@@ -110,6 +110,8 @@ struct ContentView: View {
             print(element.name)
         }
         if items.isEmpty {
+            DeciderNames.currentDecider.deciderName = .Sue
+            deciderText = DeciderNames.currentDecider.deciderName.rawValue
             storeItem()
         } else {
             updateDataItem(items.first!)
@@ -152,17 +154,14 @@ struct ContentView: View {
         for element in items {
             print(element.name)
         }
-        var deciderName = ""
         if items.isEmpty {
             print("items.isEmpty")
-            deciderName = "Gary"
+            DeciderNames.currentDecider.deciderName = .Gary
             deciderText = "Gary"
             
         } else {
             print("else items.isEmpty")
-            deciderName = items.first!.name
             deciderText = items.first!.name
-            print("deciderName = \(deciderName)")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.001) {
                 print("items.count = \(items.count)")
                 for element in items {
