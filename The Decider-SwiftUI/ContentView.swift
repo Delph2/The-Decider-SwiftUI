@@ -67,7 +67,16 @@ struct ContentView: View {
                 .onAppear {
                     print("onAppear restaurantText")
                     restaurantText = selectARestaurant()
-                    //self.initiateDeciderText()
+                    if !items.isEmpty {
+                        updateDataItemRecent(items.first!)
+                        
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.001) {
+                        print("End onAppear restaurantText = \(items.count))")
+                        for element in items {
+                            print(element.recent)
+                        }
+                    }
                 }
             Spacer()
  
@@ -203,6 +212,14 @@ struct ContentView: View {
             }
         }
         return RestaurantNames.todaysRestaurant
+    }
+    
+    func updateDataItemRecent(_ item: DataItemx) {
+        print("in updateDataItem()")
+        // Edit item data
+        item.recent.append(RestaurantNames.todaysRestaurant)
+        // Save the context
+        try? context.save()
     }
 }
 

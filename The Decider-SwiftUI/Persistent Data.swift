@@ -12,9 +12,11 @@ import SwiftData
 class   DataItemx: Identifiable {
 
     var name: String
+    var recent: [String]
     
     init(name: String) {
         
         self.name = name
+        self.recent = []
     }
 }
