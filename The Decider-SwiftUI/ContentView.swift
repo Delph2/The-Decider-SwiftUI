@@ -43,12 +43,10 @@ struct ContentView: View {
                 .background(.yellow)
                 .cornerRadius(20.0, antialiased: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
                 .onAppear {
-                    print("onAppear deciderText")
                     self.initiateDeciderText()
                 }
             Spacer()
             Button("Go to next Decider") {
-                print("Go to next Decider pushed")
                 updateDecider()
             }
             .offset(CGSize(width: 0.0, height: -30))
@@ -65,17 +63,26 @@ struct ContentView: View {
                 .cornerRadius(20.0, antialiased: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
          
                 .onAppear {
-                    print("onAppear restaurantText")
+
                     restaurantText = selectARestaurant()
+                    var matchesRecent = checkForRecentRestaurantMatch(selectedRestaurant : restaurantText)
+                    while matchesRecent {
+                        
+                        restaurantText = selectARestaurant()
+                        matchesRecent = checkForRecentRestaurantMatch(selectedRestaurant : restaurantText)
+                    }
                     if !items.isEmpty {
                         updateDataItemRecent(items.first!)
-                        
                     }
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.001) {
-                        print("End onAppear restaurantText = \(items.count))")
                         for element in items {
-                            print(element.recent)
+
+                            if element.recent.count > 5 {
+                                element.recent.removeFirst()
+
+                            }
                         }
+ //                       print("after triming array = \(String(describing: items.first?.recent))")
                     }
                 }
             Spacer()
@@ -85,39 +92,32 @@ struct ContentView: View {
 
     func updateDecider() {
  
-        print("Start updateDecider() = \(items.count))")
+ /*       print("Start updateDecider() = \(items.count))")
         for element in items {
             print(element.name)
         }
+  */
         switch  items.first?.name {
         case "Andy":
-            print("in Andy")
             DeciderNames.currentDecider.deciderName = .Gary
             deciderText = DeciderNames.currentDecider.deciderName.rawValue
             
         case "Gary":
-            print("in Gary")
             DeciderNames.currentDecider.deciderName = .Sue
             deciderText = DeciderNames.currentDecider.deciderName.rawValue
             
         case "Sue":
-            print("in Sue")
             DeciderNames.currentDecider.deciderName = .Sherri
             deciderText = DeciderNames.currentDecider.deciderName.rawValue
             
         case "Sherri":
-            print("in Sherri")
             DeciderNames.currentDecider.deciderName = .Andy
             deciderText = DeciderNames.currentDecider.deciderName.rawValue
             
         default:
             print("Error in Switch")
         }
-        print("rawvalue = \(DeciderNames.currentDecider.deciderName.rawValue)")
-        
-        for element in items {
-            print(element.name)
-        }
+
         if items.isEmpty {
             DeciderNames.currentDecider.deciderName = .Sue
             deciderText = DeciderNames.currentDecider.deciderName.rawValue
@@ -125,16 +125,17 @@ struct ContentView: View {
         } else {
             updateDataItem(items.first!)
         }
+/*
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.001) {
             print("End updateDecider() = \(items.count))")
             for element in items {
                 print(element.name)
             }
         }
+ */
     }
 
      func updateDataItem(_ item: DataItemx) {
-         print("in updateDataItem()")
          // Edit item data
          item.name = DeciderNames.currentDecider.deciderName.rawValue
          // Save the context
@@ -142,16 +143,13 @@ struct ContentView: View {
      }
     
     func storeItem() {
-        print("in storeitem")
         // Create the item
         let item = DataItemx(name: DeciderNames.currentDecider.deciderName.rawValue)
         // Add the item to the data context
         context.insert(item)
-        print("storeItem = \(item.name)")
     }
     
     func deleteItem(_ item: DataItemx) async -> Int {
-        print("count = \(items.count)")
         context.delete(item)
         let itemCount = items.count
         return itemCount
@@ -159,24 +157,12 @@ struct ContentView: View {
 
     
     func initiateDeciderText() {
-        print("Start initiateDeciderText() = \(items.count))")
-        for element in items {
-            print(element.name)
-        }
         if items.isEmpty {
-            print("items.isEmpty")
             DeciderNames.currentDecider.deciderName = .Gary
             deciderText = "Gary"
             
         } else {
-            print("else items.isEmpty")
             deciderText = items.first!.name
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.001) {
-                print("items.count = \(items.count)")
-                for element in items {
-                    print(element.name)
-                }
-            }
         }
     }
 
@@ -211,15 +197,42 @@ struct ContentView: View {
                 print("ERROR in chooseRestaurant()")
             }
         }
+
         return RestaurantNames.todaysRestaurant
     }
     
     func updateDataItemRecent(_ item: DataItemx) {
-        print("in updateDataItem()")
         // Edit item data
         item.recent.append(RestaurantNames.todaysRestaurant)
         // Save the context
         try? context.save()
+    }
+    
+    func checkForRecentRestaurantMatch(selectedRestaurant : String) -> Bool {
+        
+        
+        print("in checkForRecentRestaurantMatch: \(selectedRestaurant)")
+        
+        var foundRestaurant = false
+        var recentList = [String]()
+        if items.isEmpty {
+            return false
+        } else {
+             recentList = items.first!.recent
+        }
+        if recentList.count <= 1 {
+            
+            return false
+        }
+        for index in 0...(recentList.count - 1) {
+            print("\(selectedRestaurant) = \(recentList[index])")
+            let checkRestaurant = recentList[index]
+            if checkRestaurant == selectedRestaurant {
+                print("foundRestaurant = true")
+                foundRestaurant = true
+            }
+        }
+        return foundRestaurant
     }
 }
 
