@@ -21,6 +21,7 @@
 		7901105C2B60762A00DC011E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		790110602B60762B00DC011E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		790110632B60762B00DC011E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		79B21AE92BA7A54D00A50488 /* The-Decider-SwiftUI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "The-Decider-SwiftUI-Info.plist"; sourceTree = SOURCE_ROOT; };
 		79EDD4662B670D350060EFF7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		79EDD4682B6B0A650060EFF7 /* Persistent Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Persistent Data.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -55,6 +56,7 @@
 		790110592B60762A00DC011E /* The Decider-SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				79B21AE92BA7A54D00A50488 /* The-Decider-SwiftUI-Info.plist */,
 				7901105A2B60762A00DC011E /* The_Decider_SwiftUIApp.swift */,
 				7901105C2B60762A00DC011E /* ContentView.swift */,
 				79EDD4682B6B0A650060EFF7 /* Persistent Data.swift */,
@@ -278,11 +280,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"The Decider-SwiftUI/Preview Content\"";
 				DEVELOPMENT_TEAM = SXW4G8WJJD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "The-Decider-SwiftUI-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "The Decider";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -309,11 +312,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"The Decider-SwiftUI/Preview Content\"";
 				DEVELOPMENT_TEAM = SXW4G8WJJD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "The-Decider-SwiftUI-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "The Decider";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
