@@ -35,7 +35,10 @@ struct ContentView: View {
         
         VStack{
             Spacer()
-           Text("\(deciderText)")
+            Text("Tap for next decider")
+            Button("\(deciderText)"){
+                updateDecider()
+            }
                 .font(Font.largeTitle.weight(.bold))
                 .padding(50)
                 .foregroundColor(.blue)
@@ -46,14 +49,11 @@ struct ContentView: View {
                     self.initiateDeciderText()
                 }
             Spacer()
-            Button("Go to next Decider") {
-                updateDecider()
-            }
-            .offset(CGSize(width: 0.0, height: -30))
-            .font(Font.title)
-            .buttonStyle(GrowingButton())
             Spacer()
-            Text("\(restaurantText)")
+            Text("Tap for next restaraunt")
+            Button("\(restaurantText)"){
+                findRestaurantToDisplay()
+            }
                 .padding(40)
                 .font(.system(size: 500))
                 .minimumScaleFactor(0.01)
@@ -63,27 +63,8 @@ struct ContentView: View {
                 .cornerRadius(20.0, antialiased: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
          
                 .onAppear {
+                    findRestaurantToDisplay()
 
-                    restaurantText = selectARestaurant()
-                    var matchesRecent = checkForRecentRestaurantMatch(selectedRestaurant : restaurantText)
-                    while matchesRecent {
-                        
-                        restaurantText = selectARestaurant()
-                        matchesRecent = checkForRecentRestaurantMatch(selectedRestaurant : restaurantText)
-                    }
-                    if !items.isEmpty {
-                        updateDataItemRecent(items.first!)
-                    }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.001) {
-                        for element in items {
-
-                            if element.recent.count > 5 {
-                                element.recent.removeFirst()
-
-                            }
-                        }
- //                       print("after triming array = \(String(describing: items.first?.recent))")
-                    }
                 }
             Spacer()
  
@@ -163,6 +144,28 @@ struct ContentView: View {
             
         } else {
             deciderText = items.first!.name
+        }
+    }
+    
+    func findRestaurantToDisplay() {
+        restaurantText = selectARestaurant()
+        var matchesRecent = checkForRecentRestaurantMatch(selectedRestaurant : restaurantText)
+        while matchesRecent {
+            
+            restaurantText = selectARestaurant()
+            matchesRecent = checkForRecentRestaurantMatch(selectedRestaurant : restaurantText)
+        }
+        if !items.isEmpty {
+            updateDataItemRecent(items.first!)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.001) {
+            for element in items {
+
+                if element.recent.count > 5 {
+                    element.recent.removeFirst()
+
+                }
+            }
         }
     }
 
