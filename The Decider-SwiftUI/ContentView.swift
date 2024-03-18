@@ -40,11 +40,12 @@ struct ContentView: View {
                 updateDecider()
             }
                 .font(Font.largeTitle.weight(.bold))
-                .padding(50)
+                .lineLimit(1)
                 .foregroundColor(.blue)
-                .frame(width: 200)
+                .frame(width: 200, height: 150, alignment: .center)
                 .background(.yellow)
                 .cornerRadius(20.0, antialiased: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+                .buttonStyle(.plain)
                 .onAppear {
                     self.initiateDeciderText()
                 }
@@ -54,13 +55,13 @@ struct ContentView: View {
             Button("\(restaurantText)"){
                 findRestaurantToDisplay()
             }
-                .padding(40)
-                .font(.system(size: 500))
+                .font(Font.largeTitle.weight(.bold))
                 .minimumScaleFactor(0.01)
                 .foregroundColor(.blue)
-                .frame(width: 200, alignment: .center)
+                .frame(width: 200, height: 150, alignment: .center)
                 .background(.yellow)
                 .cornerRadius(20.0, antialiased: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+                .buttonStyle(.plain)
          
                 .onAppear {
                     findRestaurantToDisplay()
